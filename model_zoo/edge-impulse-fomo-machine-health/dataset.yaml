@@ -1,0 +1,12 @@
+info:
+  description: Justin Lutz Smart Factory dataset
+  url: http://na.com
+  version: '1.0'
+  year: 2023
+  contributor: Justin Lutz
+  date_created: 2023/02/28
+categories:
+- id: 0
+  name: power
+- id: 1
+  name: zone

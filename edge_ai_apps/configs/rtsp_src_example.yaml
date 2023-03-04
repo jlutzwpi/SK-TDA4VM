@@ -1,0 +1,46 @@
+title: "RTSP stream Demo"
+log_level: 2
+inputs:
+    # https://gist.github.com/Santiago-vdk/80c378a315722a1b813ae5da1661f890
+    # Steps given in the above url can be used to create an rtsp src in a
+    # linux machine
+    input0:
+        source: rtsp://192.168.86.25:8554/test # rtsp stream url
+        width: 640
+        height: 480
+        framerate: 30
+        loop: True
+models:
+    model0:
+        model_path: /opt/model_zoo/TVM-CL-3090-mobileNetV2-tv #img classification
+        topN: 5
+    model1:
+        model_path: /opt/model_zoo/TFL-OD-2020-ssdLite-mobDet-DSP-coco-320x320 #object detection
+        viz_threshold: 0.6
+    model2:
+        model_path: /opt/model_zoo/ONR-SS-8610-deeplabv3lite-mobv2-ade20k32-512x512 #sem seg
+        alpha: 0.4
+    model3:
+        model_path: /opt/model_zoo/ONR-KD-7060-human-pose-yolox-s-640x640 #pose estimation
+        viz_threshold: 0.6
+    model4:
+        model_path: /opt/model_zoo/edge-impulse-fomo-machine-health
+        viz_threshold: 0.6
+
+outputs:
+    output0:
+        sink: kmssink
+        width: 1920
+        height: 1080
+    output1:
+        sink: /opt/edge_ai_apps/data/output/videos/output_video.mkv
+        width: 1920
+        height: 1080
+    output2:
+        sink: /opt/edge_ai_apps/data/output/images/output_image_%04d.jpg
+        width: 1920
+        height: 1080
+
+flows:
+    flow0: [input0,model4,output0,[100,100,640,480]]
+        
